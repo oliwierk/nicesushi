@@ -1,0 +1,186 @@
+export interface MenuItem {
+  id: number;
+  name: string;
+  desc: string;
+  volume: string;
+  price: string;
+  image: string;
+  tag?: string;
+}
+
+export interface MenuData {
+  tuby: MenuItem[];
+  zestawy: MenuItem[];
+  rolki: MenuItem[];
+  nigiri: MenuItem[];
+}
+
+export const menuData: MenuData = {
+  tuby: [
+    {
+      id: 1,
+      name: 'Nice Tuba',
+      desc: 'Łosoś, awokado, serek philadelphia, ogórek, sos Nice — nasz flagowy hit wiralowy',
+      volume: '1 tuba',
+      price: '28',
+      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      tag: 'bestseller',
+    },
+    {
+      id: 2,
+      name: 'Flambe Tuba',
+      desc: 'Flambirowany łosoś, awokado, kanpyo, serek philadelphia, sos ponzu — efekt przy stole',
+      volume: '1 tuba',
+      price: '32',
+      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      tag: 'nowe',
+    },
+    {
+      id: 3,
+      name: 'Spicy Tuba',
+      desc: 'Łosoś, mango, jalapeño, serek, sos spicy mayo — dla odważnych',
+      volume: '1 tuba',
+      price: '30',
+      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 4,
+      name: 'Crispy Krewetka Tuba',
+      desc: 'Krewetka w tempurze, awokado, ogórek, serek, sos teriyaki — chrupiąca perfekcja',
+      volume: '1 tuba',
+      price: '30',
+      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 5,
+      name: 'Tuna Tuba',
+      desc: 'Tuńczyk, ogórek, awokado, sezam, sos sojowy z imbirem — klasyka w nowej formie',
+      volume: '1 tuba',
+      price: '32',
+      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+    },
+  ],
+  zestawy: [
+    {
+      id: 6,
+      name: 'Nice Mini Set',
+      desc: 'Uramaki łosoś, california roll, maki warzywa — idealne na start',
+      volume: '20 szt. · 400g',
+      price: '55',
+      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 7,
+      name: 'Nice Classic Set',
+      desc: 'Flambirowany łosoś, krewetka tempura, uramaki mix, hosomaki — kompletne doświadczenie',
+      volume: '30 szt. · 620g',
+      price: '79',
+      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      tag: 'popular',
+    },
+    {
+      id: 8,
+      name: 'Nice Party Set',
+      desc: 'Pełny przekrój menu — flambe, crispy, spicy, klasyka, mix autorski',
+      volume: '40 szt. · 840g',
+      price: '105',
+      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 9,
+      name: 'Nice Premium Set',
+      desc: 'Wszystko co najlepsze — 4 tuby Nice + autorski miks rolek i zestawów',
+      volume: '50 szt. · 1060g',
+      price: '129',
+      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      tag: 'premium',
+    },
+  ],
+  rolki: [
+    {
+      id: 10,
+      name: 'Nice Roll',
+      desc: 'Łosoś flambirowany, awokado, serek philadelphia, ogórek, glazura teriyaki',
+      volume: '8 szt.',
+      price: '32',
+      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      tag: 'bestseller',
+    },
+    {
+      id: 11,
+      name: 'Cherry Blossom Roll',
+      desc: 'Łosoś, mango, masago, serek, sos tropical — różany kolor, owocowy smak',
+      volume: '8 szt.',
+      price: '35',
+      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      tag: 'nowe',
+    },
+    {
+      id: 12,
+      name: 'Katowice Roll',
+      desc: 'Krewetka tempura, awokado, łosoś surowy, sos teriyaki, prażona cebulka',
+      volume: '8 szt.',
+      price: '38',
+      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 13,
+      name: 'Spicy Dragon',
+      desc: 'Tuńczyk, jalapeño, avocado, majonez spicy, sezam — dla miłośników ostrości',
+      volume: '8 szt.',
+      price: '34',
+      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 14,
+      name: 'Crispy Salmon',
+      desc: 'Łosoś, serek, ogórek, chrupiący ryż, sos nicejski — tekstury w harmonii',
+      volume: '8 szt.',
+      price: '36',
+      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+    },
+  ],
+  nigiri: [
+    {
+      id: 15,
+      name: 'Łosoś Nigiri',
+      desc: 'Świeży łosoś atlantycki na ryżu sushi, z wasabi i imbirem',
+      volume: '2 szt.',
+      price: '14',
+      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 16,
+      name: 'Tuńczyk Nigiri',
+      desc: 'Premium tuńczyk na ryżu sushi, delikatnie doprawiony',
+      volume: '2 szt.',
+      price: '16',
+      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 17,
+      name: 'Sashimi Łosoś',
+      desc: 'Cienko krojony łosoś atlantycki — czysta doskonałość',
+      volume: '5 szt.',
+      price: '28',
+      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 18,
+      name: 'Sashimi Tuńczyk',
+      desc: 'Premium sashimi z tuńczyka, podawane z wasabi i imbirem marynowanym',
+      volume: '5 szt.',
+      price: '30',
+      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      id: 19,
+      name: 'Sashimi Mix',
+      desc: 'Selekcja najlepszych ryb — łosoś, tuńczyk, makrela, ośmiornica',
+      volume: '10 szt.',
+      price: '52',
+      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      tag: 'premium',
+    },
+  ],
+};
