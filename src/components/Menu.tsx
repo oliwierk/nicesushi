@@ -7,187 +7,200 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Tab = 'tuby' | 'zestawy' | 'rolki' | 'nigiri';
 
-const TAB_LABELS: Record<Tab, string> = {
-  tuby: 'Sushi w Tubie',
-  zestawy: 'Zestawy',
-  rolki: 'Rolki',
-  nigiri: 'Nigiri',
+const TABS: { id: Tab; label: string; icon: string }[] = [
+  { id: 'tuby',    label: 'Sushi w Tubie', icon: '🧋' },
+  { id: 'zestawy', label: 'Zestawy',       icon: '🎁' },
+  { id: 'rolki',   label: 'Rolki',         icon: '🍣' },
+  { id: 'nigiri',  label: 'Nigiri',        icon: '🐟' },
+];
+
+const TAG_LABEL: Record<string, string> = {
+  bestseller: 'bestseller',
+  nowe: 'nowość',
+  popular: 'popular',
+  premium: 'premium',
 };
 
-const TAG_STYLES: Record<string, { bg: string; color: string }> = {
-  bestseller: { bg: 'rgba(232,121,155,0.18)', color: 'var(--pink)' },
-  nowe:       { bg: 'rgba(157,202,196,0.18)', color: 'var(--mint)' },
-  popular:    { bg: 'rgba(232,121,155,0.12)', color: 'var(--pink)' },
-  premium:    { bg: 'rgba(157,202,196,0.12)', color: 'var(--mint)' },
+const TAG_COLOR: Record<string, { bg: string; text: string }> = {
+  bestseller: { bg: 'rgba(232,121,155,0.2)',  text: '#E8799B' },
+  nowe:       { bg: 'rgba(157,202,196,0.2)',  text: '#9DCAC4' },
+  popular:    { bg: 'rgba(232,121,155,0.15)', text: '#E8799B' },
+  premium:    { bg: 'rgba(157,202,196,0.15)', text: '#9DCAC4' },
 };
 
-function MenuRow({
-  item, index, onMouseEnter, onMouseLeave,
-}: {
-  item: MenuItem;
-  index: number;
-  onMouseEnter: (item: MenuItem) => void;
-  onMouseLeave: () => void;
-}) {
+function MenuCard({ item, index }: { item: MenuItem; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  useEffect(() => {
+    ScrollTrigger.create({
+      trigger: cardRef.current,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo(cardRef.current,
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: (index % 3) * 0.07 }
+        );
+      },
+    });
+  }, [index]);
+
+  const tagStyle = item.tag ? TAG_COLOR[item.tag] : null;
+
   return (
-    <div
-      onMouseEnter={() => onMouseEnter(item)}
-      onMouseLeave={onMouseLeave}
-      className="menu-row"
+    <article
+      ref={cardRef}
       style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr auto auto',
-        alignItems: 'center',
-        gap: 'clamp(12px, 3vw, 40px)',
-        padding: 'clamp(18px, 2.5vw, 28px) 0',
-        borderBottom: '1px solid var(--line-subtle)',
-        cursor: 'default',
-        transition: 'border-color 0.3s ease',
-        position: 'relative',
+        opacity: 0,
+        background: 'var(--bg-elevated)',
+        border: '1px solid var(--line-subtle)',
+        overflow: 'hidden',
+        transition: 'border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(232,121,155,0.25)';
+        e.currentTarget.style.transform = 'translateY(-3px)';
+        e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,0,0,0.35)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'var(--line-subtle)';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
       }}
     >
-      <div style={{
-        position: 'absolute', left: -36, top: '50%', transform: 'translateY(-50%)',
-        fontFamily: 'var(--font-body)', fontSize: 10,
-        color: 'var(--muted)', opacity: 0.4, letterSpacing: '0.1em',
-      }}>
-        {String(index + 1).padStart(2, '0')}
+      {/* Image */}
+      <div style={{ position: 'relative', aspectRatio: '16 / 9', overflow: 'hidden', background: 'var(--bg-card)' }}>
+        <img
+          src={item.image}
+          alt={item.name}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setImgLoaded(true)}
+          style={{
+            width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+            filter: 'brightness(0.82) contrast(1.08) saturate(0.9)',
+            transition: 'filter 0.5s ease, transform 0.55s ease, opacity 0.4s ease',
+            opacity: imgLoaded ? 1 : 0,
+          }}
+        />
+        {!imgLoaded && (
+          <div aria-hidden="true" style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%)',
+          }} />
+        )}
+        {item.tag && tagStyle && (
+          <div style={{
+            position: 'absolute', top: 12, left: 12,
+            background: tagStyle.bg,
+            color: tagStyle.text,
+            backdropFilter: 'blur(8px)',
+            padding: '4px 10px',
+            fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 600,
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+          }}>
+            {TAG_LABEL[item.tag]}
+          </div>
+        )}
+        {/* Number */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: 12, right: 12,
+          fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: 700,
+          color: 'rgba(245,240,235,0.4)', letterSpacing: '0.1em',
+        }}>
+          {String(item.id).padStart(2, '0')}
+        </div>
       </div>
 
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-          <div
-            className="row-name"
-            style={{
-              fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 1.5vw, 17px)',
-              fontWeight: 600, letterSpacing: '0.08em', color: 'var(--text)',
-              textTransform: 'uppercase', transition: 'color 0.3s ease',
-            }}
-          >
-            {item.name}
-          </div>
-          {item.tag && TAG_STYLES[item.tag] && (
-            <span style={{
-              fontFamily: 'var(--font-body)', fontSize: 8, letterSpacing: '0.28em',
-              textTransform: 'uppercase', padding: '3px 8px',
-              background: TAG_STYLES[item.tag].bg,
-              color: TAG_STYLES[item.tag].color,
-              flexShrink: 0,
-            }}>
-              {item.tag}
-            </span>
-          )}
-        </div>
-        <div style={{
-          fontFamily: 'var(--font-body)', fontSize: 'clamp(11px, 0.95vw, 13px)',
-          color: 'var(--muted)', lineHeight: 1.5, maxWidth: '520px',
+      {/* Content */}
+      <div style={{ padding: 'clamp(16px, 2vw, 22px)', display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+        <h3 style={{
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.4vw, 18px)',
+          fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
+          color: 'var(--text)', lineHeight: 1.2,
+        }}>
+          {item.name}
+        </h3>
+        <p style={{
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(13px, 1vw, 15px)',
+          color: 'var(--muted)', lineHeight: 1.65, flex: 1,
         }}>
           {item.desc}
+        </p>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          marginTop: 4, paddingTop: 12,
+          borderTop: '1px solid var(--line-subtle)',
+        }}>
+          <span style={{
+            fontFamily: 'var(--font-body)', fontSize: '13px', fontWeight: 400,
+            color: 'var(--dim)', letterSpacing: '0.06em',
+          }}>
+            {item.volume}
+          </span>
+          <span style={{
+            fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 1.8vw, 22px)',
+            fontWeight: 700, color: 'var(--pink)', letterSpacing: '0.04em',
+            display: 'flex', alignItems: 'baseline', gap: 3,
+          }}>
+            {item.price}
+            <span style={{ fontSize: '13px', fontWeight: 400, color: 'var(--muted)' }}>zł</span>
+          </span>
         </div>
       </div>
-
-      <div style={{
-        fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: '0.1em',
-        color: 'var(--muted)', textAlign: 'right', whiteSpace: 'nowrap',
-      }}>
-        {item.volume}
-      </div>
-
-      <div style={{
-        fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.7vw, 19px)',
-        fontWeight: 600, color: 'var(--pink)', letterSpacing: '0.06em',
-        textAlign: 'right', whiteSpace: 'nowrap', minWidth: 72,
-        display: 'flex', alignItems: 'baseline', gap: 3,
-      }}>
-        {item.price}
-        <span style={{ fontSize: 11, fontWeight: 400, color: 'var(--muted)' }}>zł</span>
-      </div>
-    </div>
+    </article>
   );
 }
 
 export default function Menu() {
   const sectionRef = useRef<HTMLElement>(null);
-  const rowsRef = useRef<HTMLDivElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<Tab>('tuby');
-  const [hoveredItem, setHoveredItem] = useState<MenuItem | null>(null);
-  const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
-  const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null);
   const prevTab = useRef<Tab>('tuby');
 
   useEffect(() => {
-    if (previewRef.current) {
-      xTo.current = gsap.quickTo(previewRef.current, 'x', { duration: 0.42, ease: 'power3.out' });
-      yTo.current = gsap.quickTo(previewRef.current, 'y', { duration: 0.42, ease: 'power3.out' });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!rowsRef.current) return;
-    if (prevTab.current !== activeTab) {
-      const rows = rowsRef.current.querySelectorAll('.menu-row');
-      gsap.fromTo(
-        rows,
-        { opacity: 0, x: -16 },
-        { opacity: 1, x: 0, stagger: 0.05, duration: 0.45, ease: 'power3.out' }
-      );
-      prevTab.current = activeTab;
-    }
-  }, [activeTab]);
-
-  useEffect(() => {
     const ctx = gsap.context(() => {
-      const header = sectionRef.current?.querySelector('.menu-header');
-      const tabs = sectionRef.current?.querySelector('.menu-tabs');
       gsap.fromTo(
-        [header, tabs],
+        [sectionRef.current?.querySelector('.menu-header'),
+         sectionRef.current?.querySelector('.menu-tabs')],
         { opacity: 0, y: 24 },
         {
           opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
         }
       );
-
-      ScrollTrigger.create({
-        trigger: rowsRef.current,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          const rows = rowsRef.current?.querySelectorAll('.menu-row');
-          if (rows) {
-            gsap.fromTo(rows,
-              { opacity: 0, x: -20 },
-              { opacity: 1, x: 0, stagger: 0.06, duration: 0.55, ease: 'power3.out' }
-            );
-          }
-        },
-      });
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    xTo.current?.(e.clientX);
-    yTo.current?.(e.clientY);
-  }, []);
+  const switchTab = useCallback((tab: Tab) => {
+    if (tab === activeTab) return;
 
-  const handleRowEnter = useCallback((item: MenuItem) => {
-    setHoveredItem(item);
-    gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.28, ease: 'power2.out' });
-    document.querySelectorAll('.row-name').forEach((el) => {
-      (el as HTMLElement).style.color = 'var(--muted)';
-    });
-  }, []);
-
-  const handleRowLeave = useCallback(() => {
-    setHoveredItem(null);
-    gsap.to(previewRef.current, { opacity: 0, scale: 0.93, duration: 0.22, ease: 'power2.in' });
-    document.querySelectorAll('.row-name').forEach((el) => {
-      (el as HTMLElement).style.color = 'var(--text)';
-    });
-  }, []);
+    if (gridRef.current) {
+      gsap.to(gridRef.current, {
+        opacity: 0, y: 16, duration: 0.22, ease: 'power2.in',
+        onComplete: () => {
+          setActiveTab(tab);
+          prevTab.current = tab;
+          // Scroll triggers re-fire after content swap
+          requestAnimationFrame(() => {
+            if (gridRef.current) {
+              gsap.fromTo(gridRef.current,
+                { opacity: 0, y: 16 },
+                { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' }
+              );
+            }
+            ScrollTrigger.refresh();
+          });
+        },
+      });
+    } else {
+      setActiveTab(tab);
+    }
+  }, [activeTab]);
 
   const items = menuData[activeTab];
 
@@ -195,135 +208,122 @@ export default function Menu() {
     <section
       id="menu"
       ref={sectionRef}
-      onMouseMove={handleMouseMove}
+      aria-labelledby="menu-heading"
       style={{
         background: 'var(--bg-card)',
         padding: 'clamp(80px, 12vw, 140px) clamp(24px, 8vw, 120px)',
-        position: 'relative', minHeight: '80vh',
+        position: 'relative',
       }}
     >
-      {/* Floating preview */}
-      <div
-        ref={previewRef}
-        style={{
-          position: 'fixed', top: 0, left: 0,
-          width: 220, height: 160, pointerEvents: 'none',
-          zIndex: 5000, opacity: 0, scale: 0.93,
-          transform: 'translate(-50%, calc(-100% - 16px))',
-          overflow: 'hidden', border: '1px solid var(--line)',
-        }}
-      >
-        {hoveredItem && (
-          <>
-            <img
-              src={hoveredItem.image}
-              alt={hoveredItem.name}
-              loading="lazy"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.78) contrast(1.1)' }}
-            />
-            <div style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              padding: '10px 12px',
-              background: 'linear-gradient(transparent, rgba(13,31,23,0.92))',
-              fontFamily: 'var(--font-body)', fontSize: 9,
-              letterSpacing: '0.2em', color: 'var(--pink)', textTransform: 'uppercase',
-            }}>
-              {hoveredItem.name}
-            </div>
-          </>
-        )}
-      </div>
-
       {/* Header */}
-      <div className="menu-header" style={{ marginBottom: 'clamp(40px, 6vw, 72px)' }}>
+      <div className="menu-header" style={{ marginBottom: 'clamp(36px, 5vw, 60px)' }}>
         <div style={{
-          fontFamily: 'var(--font-body)', fontSize: 9, letterSpacing: '0.45em',
-          color: 'var(--pink)', textTransform: 'uppercase', marginBottom: 16,
-          display: 'flex', alignItems: 'center', gap: 12,
+          fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
+          letterSpacing: '0.3em', color: 'var(--pink)', textTransform: 'uppercase',
+          marginBottom: 16, display: 'flex', alignItems: 'center', gap: 12,
         }}>
-          <span style={{ display: 'block', width: 24, height: '0.5px', background: 'var(--pink)' }} />
+          <span aria-hidden="true" style={{ display: 'block', width: 24, height: '1px', background: 'var(--pink)' }} />
           Karta Dań
         </div>
-        <h2 style={{
-          fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 64px)',
-          fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase',
+        <h2 id="menu-heading" style={{
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(34px, 5vw, 66px)',
+          fontWeight: 900, letterSpacing: '0.06em', textTransform: 'uppercase',
           color: 'var(--text)', lineHeight: 1,
         }}>
           Zamów Online
         </h2>
         <p style={{
-          fontFamily: 'var(--font-editorial)', fontStyle: 'italic',
-          fontSize: 'clamp(12px, 1.1vw, 14px)', color: 'var(--muted)',
-          marginTop: 12, letterSpacing: '0.03em',
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(14px, 1.2vw, 16px)',
+          color: 'var(--muted)', marginTop: 14, letterSpacing: '0.02em', lineHeight: 1.6,
         }}>
-          Dostępne na Pyszne.pl · dowóz i odbiór osobisty
+          Dostępne na Pyszne.pl — dowóz i odbiór osobisty w Katowicach
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="menu-tabs" style={{
-        display: 'flex', gap: 0,
-        marginBottom: 'clamp(28px, 4vw, 48px)',
-        borderBottom: '1px solid var(--line-subtle)',
-        overflowX: 'auto',
-      }}>
-        {(Object.keys(TAB_LABELS) as Tab[]).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            style={{
-              fontFamily: 'var(--font-body)', fontSize: 11,
-              letterSpacing: '0.25em', textTransform: 'uppercase',
-              color: activeTab === tab ? 'var(--text)' : 'var(--muted)',
-              background: 'none', border: 'none', cursor: 'pointer',
-              padding: 'clamp(12px, 1.5vw, 16px) clamp(16px, 2.5vw, 32px) clamp(12px, 1.5vw, 16px) 0',
-              position: 'relative', transition: 'color 0.3s ease',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {TAB_LABELS[tab]}
-            <span style={{
-              position: 'absolute', bottom: -1, left: 0,
-              width: activeTab === tab ? '100%' : '0%',
-              height: '1.5px', background: 'var(--pink)',
-              transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-            }} />
-          </button>
-        ))}
+      {/* Tab filters */}
+      <div
+        className="menu-tabs"
+        role="tablist"
+        aria-label="Kategorie menu"
+        style={{
+          display: 'flex', gap: 8, marginBottom: 'clamp(32px, 4vw, 52px)',
+          flexWrap: 'wrap',
+        }}
+      >
+        {TABS.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={isActive}
+              aria-controls="menu-grid"
+              onClick={() => switchTab(tab.id)}
+              style={{
+                fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: isActive ? 600 : 400,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                color: isActive ? 'var(--bg)' : 'var(--muted)',
+                background: isActive ? 'var(--pink)' : 'transparent',
+                border: `1.5px solid ${isActive ? 'var(--pink)' : 'var(--line-subtle)'}`,
+                padding: '10px 22px',
+                transition: 'all 0.25s ease',
+                cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 8,
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = 'var(--pink-dim)';
+                  e.currentTarget.style.color = 'var(--text)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = 'var(--line-subtle)';
+                  e.currentTarget.style.color = 'var(--muted)';
+                }
+              }}
+            >
+              <span aria-hidden="true" style={{ fontSize: '16px' }}>{tab.icon}</span>
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Menu rows */}
-      <div ref={rowsRef} style={{ position: 'relative', paddingLeft: 36 }}>
-        <div style={{ height: '0.5px', background: 'var(--line-subtle)' }} />
+      {/* Card grid */}
+      <div
+        id="menu-grid"
+        ref={gridRef}
+        role="tabpanel"
+        aria-label={`${TABS.find(t => t.id === activeTab)?.label} — lista pozycji`}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
+          gap: 'clamp(16px, 2.5vw, 24px)',
+        }}
+      >
         {items.map((item, i) => (
-          <MenuRow
-            key={item.id}
-            item={item}
-            index={i}
-            onMouseEnter={handleRowEnter}
-            onMouseLeave={handleRowLeave}
-          />
+          <MenuCard key={item.id} item={item} index={i} />
         ))}
       </div>
 
-      {/* CTA */}
+      {/* Footer CTA */}
       <div style={{
-        marginTop: 'clamp(40px, 5vw, 64px)',
-        paddingTop: 32,
-        borderTop: '1px solid var(--line-subtle)',
+        marginTop: 'clamp(48px, 6vw, 72px)',
+        paddingTop: 32, borderTop: '1px solid var(--line-subtle)',
         display: 'flex', justifyContent: 'space-between',
         alignItems: 'center', flexWrap: 'wrap', gap: 16,
       }}>
         <div>
           <p style={{
-            fontFamily: 'var(--font-body)', fontSize: 11,
-            color: 'var(--muted)', letterSpacing: '0.05em', marginBottom: 4,
+            fontFamily: 'var(--font-body)', fontSize: '14px',
+            color: 'var(--muted)', lineHeight: 1.6, marginBottom: 4,
           }}>
-            Wszystkie ceny zawierają VAT. Dostawa w Katowicach.
+            Wszystkie ceny zawierają VAT. Dostawa w Katowicach i okolicach.
           </p>
           <p style={{
-            fontFamily: 'var(--font-editorial)', fontStyle: 'italic',
-            fontSize: 11, color: 'var(--dim)',
+            fontFamily: 'var(--font-body)', fontStyle: 'italic',
+            fontSize: '13px', color: 'var(--dim)',
           }}>
             Alergeny dostępne na zapytanie.
           </p>
@@ -332,11 +332,12 @@ export default function Menu() {
           href="https://www.pyszne.pl/menu/nice-sushi-3"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Zamów Nice Sushi na Pyszne.pl — otwiera nową kartę"
           style={{
-            fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: '0.25em',
-            color: 'var(--bg)', background: 'var(--pink)',
-            padding: '14px 36px', textTransform: 'uppercase',
-            display: 'inline-block', transition: 'background 0.3s ease, transform 0.25s ease',
+            fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600,
+            letterSpacing: '0.2em', color: 'var(--bg)', background: 'var(--pink)',
+            padding: '15px 38px', textTransform: 'uppercase',
+            display: 'inline-block', transition: 'background 0.25s ease, transform 0.22s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = 'var(--pink-vivid)';
@@ -350,16 +351,6 @@ export default function Menu() {
           Zamów na Pyszne.pl →
         </a>
       </div>
-
-      <style>{`
-        .menu-row:hover .row-name {
-          color: var(--pink) !important;
-        }
-        .menu-row:hover {
-          border-bottom-color: rgba(232, 121, 155, 0.18) !important;
-        }
-        .menu-tabs::-webkit-scrollbar { display: none; }
-      `}</style>
     </section>
   );
 }

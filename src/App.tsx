@@ -40,10 +40,13 @@ export default function App() {
 
   return (
     <>
-      <Preloader onComplete={handlePreloaderComplete} />
+      {/* Skip navigation — WCAG 2.4.1 */}
+      <a href="#main-content" className="skip-link">Przejdź do treści</a>
+
+      {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
       <div ref={mainRef} style={{ opacity: 0 }}>
         <Navigation />
-        <main>
+        <main id="main-content">
           <Hero />
           <Stats />
           <Philosophy />

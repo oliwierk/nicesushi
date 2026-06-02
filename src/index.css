@@ -5,7 +5,6 @@
 }
 
 :root {
-  /* Nice Sushi — Forest Green + Cherry Blossom Pink */
   --bg: #0D1F17;
   --bg-card: #112018;
   --bg-warm: #0F1C15;
@@ -24,13 +23,15 @@
   --mint-dim: rgba(157, 202, 196, 0.18);
 
   --text: #F5F0EB;
-  --muted: #7A9E8E;
-  --dim: #3A5445;
+  --muted: #9AB8A8;   /* lightened for WCAG AA on dark bg */
+  --dim: #607868;     /* lightened from #3A5445 for contrast */
 
   --line: rgba(232, 121, 155, 0.12);
-  --line-subtle: rgba(255, 255, 255, 0.06);
+  --line-subtle: rgba(255, 255, 255, 0.07);
 
-  --font-display: 'Cinzel', serif;
+  /* Outfit replaces Cinzel — clean geometric sans-serif */
+  --font-display: 'Outfit', sans-serif;
+  /* Playfair kept only for the "Nice" logo italic */
   --font-editorial: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 
@@ -41,10 +42,13 @@
 html {
   background-color: var(--bg);
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
   font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--text);
   background-color: var(--bg);
   overflow-x: hidden;
@@ -52,23 +56,52 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 2px; }
+/* Skip to content — WCAG 2.4.1 */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  background: var(--pink);
+  color: var(--bg);
+  padding: 10px 20px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 99999;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus visible — WCAG 2.4.7 */
+:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--pink-dim); }
+::-webkit-scrollbar-thumb { background: var(--pink-dim); border-radius: 2px; }
 
 ::selection { background: var(--pink); color: var(--bg); }
 
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; }
+button { font-family: inherit; cursor: pointer; }
 
+/* Grain overlay */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9998;
-  opacity: 0.22;
+  opacity: 0.2;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
@@ -77,16 +110,23 @@ body::after {
 
 section { position: relative; overflow: hidden; }
 
+/* Fixed navbar offset so anchor links land below the bar */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
 .split-word { display: inline-block; overflow: hidden; vertical-align: top; }
 .split-letter { display: inline-block; will-change: transform; }
 
+/* Section label */
 .section-label {
   display: flex;
   align-items: center;
   gap: 12px;
   font-family: var(--font-body);
-  font-size: 9px;
-  letter-spacing: 0.45em;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
   color: var(--pink);
   text-transform: uppercase;
 }
@@ -94,7 +134,7 @@ section { position: relative; overflow: hidden; }
   content: '';
   display: block;
   width: 24px;
-  height: 0.5px;
+  height: 1px;
   background: var(--pink);
   flex-shrink: 0;
 }

@@ -7,27 +7,35 @@ gsap.registerPlugin(ScrollTrigger);
 const photos = [
   {
     id: 'a',
-    src: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=900&q=85',
+    src: '/rolka.jpg',
     label: 'Sushi w Tubie',
+    span: 'main',
   },
   {
     id: 'b',
-    src: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=700&q=85',
-    label: 'Nice Roll',
+    src: '/rolki.webp',
+    label: 'Nice Sushi Katowice',
+    span: 'normal',
   },
   {
     id: 'c',
-    src: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=700&q=85',
-    label: 'Cherry Blossom Roll',
+    src: '/avocadoroll].jpg',
+    label: 'Avocado Cream Roll',
+    span: 'normal',
   },
   {
     id: 'd',
-    src: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=700&q=85',
-    label: 'Katowice Roll',
+    src: '/wiecejrolek.jpg',
+    label: 'Uramaki & Grill Łosoś',
+    span: 'wide',
   },
 ];
 
-function GalleryCell({ photo, delay }: { photo: typeof photos[0]; delay: number }) {
+function GalleryCell({ photo, delay, style }: {
+  photo: typeof photos[0];
+  delay: number;
+  style?: React.CSSProperties;
+}) {
   const [hovered, setHovered] = useState(false);
   const cellRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -35,24 +43,23 @@ function GalleryCell({ photo, delay }: { photo: typeof photos[0]; delay: number 
 
   useEffect(() => {
     if (hovered) {
-      gsap.to(overlayRef.current, { opacity: 1, duration: 0.4, ease: 'power2.out' });
-      gsap.to(captionRef.current, { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out' });
+      gsap.to(overlayRef.current, { opacity: 1, duration: 0.38, ease: 'power2.out' });
+      gsap.to(captionRef.current, { y: 0, opacity: 1, duration: 0.42, ease: 'power3.out' });
     } else {
-      gsap.to(overlayRef.current, { opacity: 0, duration: 0.35, ease: 'power2.in' });
-      gsap.to(captionRef.current, { y: 14, opacity: 0, duration: 0.3, ease: 'power2.in' });
+      gsap.to(overlayRef.current, { opacity: 0, duration: 0.32, ease: 'power2.in' });
+      gsap.to(captionRef.current, { y: 14, opacity: 0, duration: 0.28, ease: 'power2.in' });
     }
   }, [hovered]);
 
   useEffect(() => {
     ScrollTrigger.create({
       trigger: cellRef.current,
-      start: 'top 82%',
+      start: 'top 85%',
       once: true,
       onEnter: () => {
-        gsap.fromTo(
-          cellRef.current,
-          { opacity: 0, y: 40, scale: 0.97 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', delay }
+        gsap.fromTo(cellRef.current,
+          { opacity: 0, y: 36, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.88, ease: 'power3.out', delay }
         );
       },
     });
@@ -65,7 +72,8 @@ function GalleryCell({ photo, delay }: { photo: typeof photos[0]; delay: number 
       onMouseLeave={() => setHovered(false)}
       style={{
         position: 'relative', overflow: 'hidden',
-        opacity: 0, cursor: 'pointer', background: '#080F0B',
+        opacity: 0, background: '#080F0B',
+        ...style,
       }}
     >
       <img
@@ -75,36 +83,31 @@ function GalleryCell({ photo, delay }: { photo: typeof photos[0]; delay: number 
         decoding="async"
         style={{
           width: '100%', height: '100%', objectFit: 'cover', display: 'block',
-          filter: `brightness(${hovered ? 0.88 : 0.62}) contrast(1.1) saturate(${hovered ? 1.0 : 0.85})`,
-          transform: hovered ? 'scale(1.04)' : 'scale(1)',
-          transition: 'filter 0.5s ease, transform 0.6s var(--ease-expo)',
+          filter: `brightness(${hovered ? 0.88 : 0.6}) contrast(1.1) saturate(${hovered ? 1.0 : 0.82})`,
+          transform: hovered ? 'scale(1.05)' : 'scale(1)',
+          transition: 'filter 0.5s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
           willChange: 'transform',
         }}
       />
 
-      <div
-        ref={overlayRef}
-        style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(27,67,50,0.65) 0%, rgba(232,121,155,0.08) 40%, transparent 70%)',
-          opacity: 0, pointerEvents: 'none',
-        }}
-      />
+      <div ref={overlayRef} aria-hidden="true" style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(27,67,50,0.7) 0%, rgba(232,121,155,0.06) 45%, transparent 75%)',
+        opacity: 0, pointerEvents: 'none',
+      }} />
 
-      <div
-        ref={captionRef}
-        style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: '20px 24px', opacity: 0, transform: 'translateY(14px)',
-        }}
-      >
+      <div ref={captionRef} style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        padding: 'clamp(16px, 2vw, 24px)',
+        opacity: 0, transform: 'translateY(14px)',
+      }}>
         <div style={{
-          fontFamily: 'var(--font-editorial)', fontSize: 'clamp(13px, 1.3vw, 16px)',
-          fontStyle: 'italic', color: 'var(--text)', letterSpacing: '0.03em',
+          fontFamily: 'var(--font-editorial)', fontSize: 'clamp(14px, 1.3vw, 17px)',
+          fontStyle: 'italic', color: 'var(--text)', letterSpacing: '0.02em',
         }}>
           {photo.label}
         </div>
-        <div style={{ width: 24, height: '0.5px', background: 'var(--pink)', marginTop: 6 }} />
+        <div aria-hidden="true" style={{ width: 24, height: '1px', background: 'var(--pink)', marginTop: 7 }} />
       </div>
     </div>
   );
@@ -120,7 +123,7 @@ export default function Gallery() {
         { opacity: 0, y: 24 },
         {
           opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 76%' },
         }
       );
     }, sectionRef);
@@ -131,6 +134,7 @@ export default function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
+      aria-label="Galeria Nice Sushi"
       style={{ background: 'var(--bg-warm)', padding: 'clamp(60px, 10vw, 120px) 0' }}
     >
       <div
@@ -143,58 +147,72 @@ export default function Gallery() {
         }}
       >
         <div>
-          <div className="section-label" style={{ marginBottom: 16 }}>
-            Galeria
-          </div>
+          <div className="section-label" style={{ marginBottom: 16 }}>Galeria</div>
           <h2 style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4.5vw, 56px)',
-            fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase',
+            fontFamily: 'var(--font-display)', fontSize: 'clamp(30px, 4.5vw, 58px)',
+            fontWeight: 900, letterSpacing: '0.05em', textTransform: 'uppercase',
             lineHeight: 1, color: 'var(--text)',
           }}>
             Jedyne takie<br />
-            <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(232,121,155,0.55)' }}>
+            <span style={{ color: 'transparent', WebkitTextStroke: '1.5px rgba(232,121,155,0.55)' }}>
               doświadczenie
             </span>
           </h2>
         </div>
         <p style={{
-          fontFamily: 'var(--font-editorial)', fontStyle: 'italic',
-          fontSize: 'clamp(13px, 1.3vw, 15px)', color: 'var(--muted)',
-          maxWidth: 280, lineHeight: 1.7, textAlign: 'right',
+          fontFamily: 'var(--font-body)', fontStyle: 'normal',
+          fontSize: 'clamp(14px, 1.3vw, 16px)', color: 'var(--muted)',
+          maxWidth: 300, lineHeight: 1.7,
         }}>
           Wirusowe sushi w tubie, autorskie rolki i smaki, które wracają w snach.
         </p>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '5fr 3fr 3fr',
-        gridTemplateRows: '320px 240px',
-        gap: 3,
-        padding: '0 clamp(24px, 6vw, 80px)',
-      }}>
-        <div style={{ gridRow: '1 / 3', gridColumn: '1 / 2' }}>
-          <GalleryCell photo={photos[0]} delay={0} />
-        </div>
-        <div style={{ gridColumn: '2 / 3', gridRow: '1 / 2' }}>
-          <GalleryCell photo={photos[1]} delay={0.1} />
-        </div>
-        <div style={{ gridColumn: '3 / 4', gridRow: '1 / 2' }}>
-          <GalleryCell photo={photos[2]} delay={0.2} />
-        </div>
-        <div style={{ gridColumn: '2 / 4', gridRow: '2 / 3' }}>
-          <GalleryCell photo={photos[3]} delay={0.3} />
-        </div>
+      {/* Desktop asymmetric grid */}
+      <div
+        className="gal-grid"
+        style={{
+          padding: '0 clamp(24px, 6vw, 80px)',
+          display: 'grid',
+          gridTemplateColumns: '5fr 3fr 3fr',
+          gridTemplateRows: '340px 250px',
+          gap: 4,
+        }}
+      >
+        {/* Large left — spans 2 rows */}
+        <GalleryCell
+          photo={photos[0]}
+          delay={0}
+          style={{ gridRow: '1 / 3', gridColumn: '1 / 2', height: '100%' }}
+        />
+        {/* Top middle */}
+        <GalleryCell
+          photo={photos[1]}
+          delay={0.1}
+          style={{ gridRow: '1 / 2', gridColumn: '2 / 3', height: '100%' }}
+        />
+        {/* Top right */}
+        <GalleryCell
+          photo={photos[2]}
+          delay={0.2}
+          style={{ gridRow: '1 / 2', gridColumn: '3 / 4', height: '100%' }}
+        />
+        {/* Bottom right wide */}
+        <GalleryCell
+          photo={photos[3]}
+          delay={0.3}
+          style={{ gridRow: '2 / 3', gridColumn: '2 / 4', height: '100%' }}
+        />
       </div>
 
       <div style={{
         padding: 'clamp(24px, 3vw, 36px) clamp(24px, 6vw, 80px) 0',
         display: 'flex', alignItems: 'center', gap: 12,
       }}>
-        <div style={{ width: 36, height: '0.5px', background: 'var(--pink)' }} />
+        <div aria-hidden="true" style={{ width: 36, height: '1px', background: 'var(--pink)' }} />
         <span style={{
-          fontFamily: 'var(--font-body)', fontSize: 10,
-          letterSpacing: '0.3em', color: 'var(--pink)', textTransform: 'uppercase',
+          fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500,
+          letterSpacing: '0.25em', color: 'var(--pink)', textTransform: 'uppercase',
         }}>
           Świeże składniki · Każdego dnia
         </span>
@@ -202,15 +220,26 @@ export default function Gallery() {
 
       <style>{`
         @media (max-width: 768px) {
-          #gallery > div:nth-of-type(2) {
+          .gal-grid {
             grid-template-columns: 1fr 1fr !important;
-            grid-template-rows: 220px 220px !important;
+            grid-template-rows: 220px 180px 180px !important;
           }
-          #gallery > div:nth-of-type(2) > div:first-child {
-            grid-row: auto !important; grid-column: 1 / 3 !important;
-          }
-          #gallery > div:nth-of-type(2) > div:last-child {
+          .gal-grid > *:first-child {
+            grid-row: 1 / 2 !important;
             grid-column: 1 / 3 !important;
+          }
+          .gal-grid > *:nth-child(4) {
+            grid-column: 1 / 3 !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .gal-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: repeat(4, 220px) !important;
+          }
+          .gal-grid > * {
+            grid-row: auto !important;
+            grid-column: auto !important;
           }
         }
       `}</style>

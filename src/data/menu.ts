@@ -23,7 +23,7 @@ export const menuData: MenuData = {
       desc: 'Łosoś, awokado, serek philadelphia, ogórek, sos Nice — nasz flagowy hit wiralowy',
       volume: '1 tuba',
       price: '28',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: '/rolka.jpg',
       tag: 'bestseller',
     },
     {
@@ -32,7 +32,7 @@ export const menuData: MenuData = {
       desc: 'Flambirowany łosoś, awokado, kanpyo, serek philadelphia, sos ponzu — efekt przy stole',
       volume: '1 tuba',
       price: '32',
-      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      image: '/rolki.webp',
       tag: 'nowe',
     },
     {
@@ -49,7 +49,7 @@ export const menuData: MenuData = {
       desc: 'Krewetka w tempurze, awokado, ogórek, serek, sos teriyaki — chrupiąca perfekcja',
       volume: '1 tuba',
       price: '30',
-      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      image: '/avocadoroll].jpg',
     },
     {
       id: 5,
@@ -57,7 +57,7 @@ export const menuData: MenuData = {
       desc: 'Tuńczyk, ogórek, awokado, sezam, sos sojowy z imbirem — klasyka w nowej formie',
       volume: '1 tuba',
       price: '32',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: '/wiecejrolek.jpg',
     },
   ],
   zestawy: [
