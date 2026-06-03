@@ -154,7 +154,7 @@ export default function Hero() {
 
               <h1 style={{
                 fontFamily: 'var(--font-display)', fontWeight: 900,
-                fontSize: 'clamp(56px, 11vw, 168px)',
+                fontSize: 'clamp(44px, 12.5vw, 210px)',
                 letterSpacing: '0.1em', textTransform: 'uppercase',
                 lineHeight: 0.93, color: 'var(--text)', overflow: 'hidden', margin: 0,
               }}>
@@ -174,7 +174,7 @@ export default function Hero() {
 
               <h1 style={{
                 fontFamily: 'var(--font-display)', fontWeight: 900,
-                fontSize: 'clamp(56px, 11vw, 168px)',
+                fontSize: 'clamp(44px, 12.5vw, 210px)',
                 letterSpacing: '0.1em', textTransform: 'uppercase',
                 lineHeight: 0.93, color: 'transparent',
                 WebkitTextStroke: '1.5px rgba(232,121,155,0.5)',
@@ -188,7 +188,7 @@ export default function Hero() {
                   fontFamily: 'var(--font-body)', fontSize: 'clamp(14px, 1.2vw, 17px)',
                   color: 'var(--muted)', letterSpacing: '0.02em', lineHeight: 1.6,
                 }}>
-                  Wirusowe sushi w tubie na patyku — jedyne w Katowicach
+                  Viral sushi w tubie na patyku — jedyne w Katowicach
                 </p>
               </div>
             </div>
@@ -278,8 +278,16 @@ export default function Hero() {
           100% { transform: translateY(-22px) rotate(28deg); }
         }
         @media (max-width: 680px) {
-          .hero-tube { display: none !important; }
-          .hero-inner-grid { grid-template-columns: 1fr !important; }
+          .hero-inner-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: 1fr auto !important;
+            align-items: start !important;
+            padding-top: 80px !important;
+          }
+          .hero-tube {
+            height: 38vh !important;
+            min-height: 200px !important;
+          }
         }
       `}</style>
     </>

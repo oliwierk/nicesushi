@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menuData, type MenuItem } from '../data/menu';
+import MenuModal from './MenuModal';
 
 type Tab = 'tuby' | 'zestawy' | 'rolki' | 'nigiri';
 
@@ -46,12 +47,17 @@ const CARD_CSS = `
   }
 `;
 
-function MenuCard({ item, index }: { item: MenuItem; index: number }) {
+function MenuCard({ item, index, onClick }: { item: MenuItem; index: number; onClick: () => void }) {
   const tagStyle = item.tag ? TAG_COLOR[item.tag] : null;
 
   return (
     <article
       className="menu-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      aria-label={`Podgląd: ${item.name}`}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
       style={{
         '--card-i': index,
         background: 'var(--bg-elevated)',
@@ -59,6 +65,7 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
+        cursor: 'pointer',
       } as React.CSSProperties}
     >
       <div style={{ position: 'relative', aspectRatio: '16 / 9', overflow: 'hidden', background: 'var(--bg-card)' }}>
@@ -129,7 +136,8 @@ function MenuCard({ item, index }: { item: MenuItem; index: number }) {
 export default function Menu() {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef    = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<Tab>('tuby');
+  const [activeTab, setActiveTab]   = useState<Tab>('tuby');
+  const [modalItem, setModalItem]   = useState<MenuItem | null>(null);
 
   /* One ScrollTrigger for section header only */
   useEffect(() => {
@@ -257,9 +265,11 @@ export default function Menu() {
         }}
       >
         {items.map((item, i) => (
-          <MenuCard key={item.id} item={item} index={i} />
+          <MenuCard key={item.id} item={item} index={i} onClick={() => setModalItem(item)} />
         ))}
       </div>
+
+      {modalItem && <MenuModal item={modalItem} onClose={() => setModalItem(null)} />}
 
       <div style={{
         marginTop: 'clamp(48px, 6vw, 72px)', paddingTop: 32,

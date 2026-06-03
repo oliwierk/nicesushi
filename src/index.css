@@ -113,7 +113,7 @@ section[id] {
   scroll-margin-top: 72px;
 }
 
-.split-word   { display: inline-block; overflow: hidden; vertical-align: top; }
+.split-word   { display: inline-block; overflow: hidden; vertical-align: top; white-space: nowrap; }
 .split-letter { display: inline-block; will-change: transform; }
 
 .section-label {

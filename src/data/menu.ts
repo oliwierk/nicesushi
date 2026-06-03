@@ -6,6 +6,7 @@ export interface MenuItem {
   price: string;
   image: string;
   tag?: string;
+  ingredients?: string[];
 }
 
 export interface MenuData {
@@ -15,16 +16,27 @@ export interface MenuData {
   nigiri: MenuItem[];
 }
 
+// Local images available in /public
+const IMG = {
+  pushup:  '/sushi_pushup.jpg',
+  rolki:   '/rolki.webp',
+  grill:   '/9.-grill-set.jpg',
+  promo:   '/PROMO-MIESZANY-SET-scaled.jpg',
+  mix:     '/zmieszone-zdjecie-zestaw-japonia-scaled.jpg',
+  misc:    '/95948.jpg',
+};
+
 export const menuData: MenuData = {
   tuby: [
     {
       id: 1,
       name: 'Nice Tuba',
-      desc: 'Łosoś, awokado, serek philadelphia, ogórek, sos Nice — nasz flagowy hit wiralowy',
+      desc: 'Łosoś, awokado, serek philadelphia, ogórek, sos Nice — nasz flagowy hit viral',
       volume: '1 tuba',
       price: '28',
-      image: '/rolka.jpg',
+      image: IMG.pushup,
       tag: 'bestseller',
+      ingredients: ['łosoś atlantycki', 'awokado', 'serek philadelphia', 'ogórek', 'ryż sushi', 'nori', 'sos Nice'],
     },
     {
       id: 2,
@@ -32,8 +44,9 @@ export const menuData: MenuData = {
       desc: 'Flambirowany łosoś, awokado, kanpyo, serek philadelphia, sos ponzu — efekt przy stole',
       volume: '1 tuba',
       price: '32',
-      image: '/rolki.webp',
+      image: IMG.pushup,
       tag: 'nowe',
+      ingredients: ['łosoś flambirowany', 'awokado', 'kanpyo', 'serek philadelphia', 'ryż sushi', 'nori', 'sos ponzu'],
     },
     {
       id: 3,
@@ -41,7 +54,8 @@ export const menuData: MenuData = {
       desc: 'Łosoś, mango, jalapeño, serek, sos spicy mayo — dla odważnych',
       volume: '1 tuba',
       price: '30',
-      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
+      ingredients: ['łosoś', 'mango', 'jalapeño', 'serek', 'ryż sushi', 'nori', 'sos spicy mayo'],
     },
     {
       id: 4,
@@ -49,7 +63,8 @@ export const menuData: MenuData = {
       desc: 'Krewetka w tempurze, awokado, ogórek, serek, sos teriyaki — chrupiąca perfekcja',
       volume: '1 tuba',
       price: '30',
-      image: '/avocadoroll].jpg',
+      image: IMG.pushup,
+      ingredients: ['krewetka tempura', 'awokado', 'ogórek', 'serek', 'ryż sushi', 'nori', 'sos teriyaki'],
     },
     {
       id: 5,
@@ -57,7 +72,8 @@ export const menuData: MenuData = {
       desc: 'Tuńczyk, ogórek, awokado, sezam, sos sojowy z imbirem — klasyka w nowej formie',
       volume: '1 tuba',
       price: '32',
-      image: '/wiecejrolek.jpg',
+      image: IMG.pushup,
+      ingredients: ['tuńczyk', 'ogórek', 'awokado', 'sezam', 'ryż sushi', 'nori', 'sos sojowy', 'imbir'],
     },
     {
       id: 6,
@@ -65,8 +81,9 @@ export const menuData: MenuData = {
       desc: 'Łosoś, tuńczyk, krewetka, mango, awokado, masago — pełen przekrój smaków w jednej tubie',
       volume: '1 tuba',
       price: '36',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
       tag: 'premium',
+      ingredients: ['łosoś', 'tuńczyk', 'krewetka', 'mango', 'awokado', 'masago', 'ryż sushi', 'nori'],
     },
     {
       id: 7,
@@ -74,8 +91,9 @@ export const menuData: MenuData = {
       desc: 'Awokado, ogórek, mango, papryka, serek śmietankowy, sos słodko-chili — 100% roślinnie',
       volume: '1 tuba',
       price: '26',
-      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
       tag: 'nowe',
+      ingredients: ['awokado', 'ogórek', 'mango', 'papryka', 'serek śmietankowy', 'ryż sushi', 'nori', 'sos słodko-chili'],
     },
     {
       id: 8,
@@ -83,7 +101,8 @@ export const menuData: MenuData = {
       desc: 'Dwie krewetki tempura, wakame, ogórek, serek, sos unagi — japońska klasyka we współczesnej formie',
       volume: '1 tuba',
       price: '33',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
+      ingredients: ['krewetka tempura', 'wakame', 'ogórek', 'serek', 'ryż sushi', 'nori', 'sos unagi'],
     },
   ],
   zestawy: [
@@ -93,7 +112,7 @@ export const menuData: MenuData = {
       desc: 'Uramaki łosoś, california roll, maki warzywa — idealne na start',
       volume: '20 szt. · 400g',
       price: '55',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: IMG.mix,
     },
     {
       id: 10,
@@ -101,7 +120,7 @@ export const menuData: MenuData = {
       desc: 'Flambirowany łosoś, krewetka tempura, uramaki mix, hosomaki — kompletne doświadczenie',
       volume: '30 szt. · 620g',
       price: '79',
-      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      image: IMG.promo,
       tag: 'popular',
     },
     {
@@ -110,7 +129,7 @@ export const menuData: MenuData = {
       desc: 'Pełny przekrój menu — flambe, crispy, spicy, klasyka, mix autorski',
       volume: '40 szt. · 840g',
       price: '105',
-      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+      image: IMG.grill,
     },
     {
       id: 12,
@@ -118,7 +137,7 @@ export const menuData: MenuData = {
       desc: 'Wszystko co najlepsze — 4 tuby Nice + autorski miks rolek i zestawów',
       volume: '50 szt. · 1060g',
       price: '129',
-      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      image: IMG.promo,
       tag: 'premium',
     },
     {
@@ -127,7 +146,7 @@ export const menuData: MenuData = {
       desc: '2 tuby do wyboru z karty + 12 szt. nigiri mix — idealne dla dwojga',
       volume: '2 tuby + 12 szt.',
       price: '72',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
       tag: 'nowe',
     },
     {
@@ -136,7 +155,7 @@ export const menuData: MenuData = {
       desc: 'Duże zestawienie dla 4 osób — tuby, rolki, nigiri, przekąski w najlepszym wydaniu',
       volume: '60 szt. · ~1400g',
       price: '155',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: IMG.mix,
       tag: 'popular',
     },
   ],
@@ -147,8 +166,9 @@ export const menuData: MenuData = {
       desc: 'Łosoś flambirowany, awokado, serek philadelphia, ogórek, glazura teriyaki',
       volume: '8 szt.',
       price: '32',
-      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      image: IMG.rolki,
       tag: 'bestseller',
+      ingredients: ['łosoś flambirowany', 'awokado', 'serek philadelphia', 'ogórek', 'ryż sushi', 'nori', 'glazura teriyaki'],
     },
     {
       id: 16,
@@ -156,7 +176,7 @@ export const menuData: MenuData = {
       desc: 'Łosoś, mango, masago, serek, sos tropical — różany kolor, owocowy smak',
       volume: '8 szt.',
       price: '35',
-      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      image: IMG.rolki,
       tag: 'nowe',
     },
     {
@@ -165,7 +185,7 @@ export const menuData: MenuData = {
       desc: 'Krewetka tempura, awokado, łosoś surowy, sos teriyaki, prażona cebulka',
       volume: '8 szt.',
       price: '38',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
     },
     {
       id: 18,
@@ -173,7 +193,7 @@ export const menuData: MenuData = {
       desc: 'Tuńczyk, jalapeño, avocado, majonez spicy, sezam — dla miłośników ostrości',
       volume: '8 szt.',
       price: '34',
-      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      image: IMG.rolki,
     },
     {
       id: 19,
@@ -181,7 +201,7 @@ export const menuData: MenuData = {
       desc: 'Łosoś, serek, ogórek, chrupiący ryż, sos nicejski — tekstury w harmonii',
       volume: '8 szt.',
       price: '36',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: IMG.mix,
     },
     {
       id: 20,
@@ -189,7 +209,7 @@ export const menuData: MenuData = {
       desc: 'Krewetka, ogórek, serek — zapiekane z sosem spicy mayo i masago na wierzchu',
       volume: '8 szt.',
       price: '37',
-      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+      image: IMG.rolki,
       tag: 'popular',
     },
     {
@@ -198,7 +218,7 @@ export const menuData: MenuData = {
       desc: 'Krewetka tempura w środku, przykryta cienkim awokado, sos eel i sezam',
       volume: '8 szt.',
       price: '39',
-      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
       tag: 'nowe',
     },
     {
@@ -207,7 +227,7 @@ export const menuData: MenuData = {
       desc: 'Krab, ogórek, awokado, majonez japoński — ponadczasowa klasyka w naszym wykonaniu',
       volume: '8 szt.',
       price: '28',
-      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      image: IMG.rolki,
     },
   ],
   nigiri: [
@@ -217,7 +237,7 @@ export const menuData: MenuData = {
       desc: 'Świeży łosoś atlantycki na ryżu sushi, z wasabi i imbirem',
       volume: '2 szt.',
       price: '14',
-      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
     },
     {
       id: 24,
@@ -225,7 +245,7 @@ export const menuData: MenuData = {
       desc: 'Premium tuńczyk na ryżu sushi, delikatnie doprawiony',
       volume: '2 szt.',
       price: '16',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
     },
     {
       id: 25,
@@ -233,7 +253,7 @@ export const menuData: MenuData = {
       desc: 'Krewetka Ebi gotowana na parze, serwowana z sosem sojowym i wasabi',
       volume: '2 szt.',
       price: '13',
-      image: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
     },
     {
       id: 26,
@@ -241,7 +261,7 @@ export const menuData: MenuData = {
       desc: 'Cienko krojony łosoś atlantycki — czysta doskonałość',
       volume: '5 szt.',
       price: '28',
-      image: 'https://images.unsplash.com/photo-1617196034799-44264b8bfee4?auto=format&fit=crop&w=600&q=80',
+      image: IMG.mix,
     },
     {
       id: 27,
@@ -249,7 +269,7 @@ export const menuData: MenuData = {
       desc: 'Premium sashimi z tuńczyka, podawane z wasabi i imbirem marynowanym',
       volume: '5 szt.',
       price: '30',
-      image: 'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?auto=format&fit=crop&w=600&q=80',
+      image: IMG.mix,
     },
     {
       id: 28,
@@ -257,7 +277,7 @@ export const menuData: MenuData = {
       desc: 'Selekcja najlepszych ryb — łosoś, tuńczyk, makrela, ośmiornica',
       volume: '10 szt.',
       price: '52',
-      image: 'https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&q=80',
+      image: IMG.grill,
       tag: 'premium',
     },
     {
@@ -266,7 +286,7 @@ export const menuData: MenuData = {
       desc: 'Łosoś flambirowany palnikiem przy stole, glazura teriyaki, masago — spektakl na talerzu',
       volume: '2 szt.',
       price: '18',
-      image: 'https://images.unsplash.com/photo-1574235664-4b6fe5b7a512?auto=format&fit=crop&w=600&q=80',
+      image: IMG.pushup,
       tag: 'nowe',
     },
     {
@@ -275,7 +295,7 @@ export const menuData: MenuData = {
       desc: 'Ryż sushi owinięty norią, z ikrą łososia — słony, intensywny, wyjątkowy',
       volume: '2 szt.',
       price: '17',
-      image: 'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?auto=format&fit=crop&w=600&q=80',
+      image: IMG.misc,
       tag: 'popular',
     },
   ],

@@ -3,10 +3,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const photos = [
-  { id: 'a', src: '/rolka.jpg',          label: 'Sushi w Tubie'        },
-  { id: 'b', src: '/rolki.webp',         label: 'Nice Sushi Katowice'  },
-  { id: 'c', src: '/avocadoroll].jpg',   label: 'Avocado Cream Roll'   },
-  { id: 'd', src: '/wiecejrolek.jpg',    label: 'Uramaki & Grill Łosoś'},
+  { id: 'a', src: '/sushi_pushup.jpg',                        label: 'Sushi w Tubie'        },
+  { id: 'b', src: '/rolki.webp',                              label: 'Nice Sushi Katowice'  },
+  { id: 'c', src: '/9.-grill-set.jpg',                        label: 'Grill Set'            },
+  { id: 'd', src: '/zmieszone-zdjecie-zestaw-japonia-scaled.jpg', label: 'Uramaki Mix'      },
 ];
 
 const CELL_CSS = `
@@ -122,7 +122,7 @@ export default function Gallery() {
           fontFamily: 'var(--font-body)', fontSize: 'clamp(13px, 1.2vw, 16px)',
           color: 'var(--muted)', maxWidth: 300, lineHeight: 1.7,
         }}>
-          Wirusowe sushi w tubie, autorskie rolki i smaki, które wracają w snach.
+          Viral sushi w tubie, autorskie rolki i smaki, które wracają w snach.
         </p>
       </div>
 

@@ -82,8 +82,8 @@ export default function Philosophy() {
           >
             <img
               ref={imgRef}
-              src="/rolki.webp"
-              alt="Nice Sushi — świeże rolki sushi przygotowane w Katowicach"
+              src="/sushi_pushup.jpg"
+              alt="Nice Sushi — sushi w tubie, Katowice"
               loading="eager"
               decoding="async"
               style={{
@@ -170,7 +170,7 @@ export default function Philosophy() {
             }}>
               Nice Sushi to pierwsze miejsce w Katowicach, gdzie sushi podajemy
               w oryginalnej tubie na patyku. Pomysł, który podbił media społecznościowe
-              i stał się symbolem naszego miasta — wirusowe, smaczne i jedyne w swoim rodzaju.
+              i stał się symbolem naszego miasta — viral, smaczne i jedyne w swoim rodzaju.
             </p>
             <p style={{
               fontFamily: 'var(--font-body)', fontSize: 'clamp(15px, 1.3vw, 17px)',
