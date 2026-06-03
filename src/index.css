@@ -12,7 +12,6 @@
 
   --green: #1B4332;
   --green-dim: rgba(27, 67, 50, 0.6);
-  --green-glow: rgba(27, 67, 50, 0.12);
 
   --pink: #E8799B;
   --pink-dim: rgba(232, 121, 155, 0.22);
@@ -23,20 +22,17 @@
   --mint-dim: rgba(157, 202, 196, 0.18);
 
   --text: #F5F0EB;
-  --muted: #9AB8A8;   /* lightened for WCAG AA on dark bg */
-  --dim: #607868;     /* lightened from #3A5445 for contrast */
+  --muted: #9AB8A8;
+  --dim: #607868;
 
   --line: rgba(232, 121, 155, 0.12);
   --line-subtle: rgba(255, 255, 255, 0.07);
 
-  /* Outfit replaces Cinzel — clean geometric sans-serif */
   --font-display: 'Outfit', sans-serif;
-  /* Playfair kept only for the "Nice" logo italic */
   --font-editorial: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -56,7 +52,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Skip to content — WCAG 2.4.1 */
+/* Skip link — WCAG 2.4.1 */
 .skip-link {
   position: absolute;
   top: -100%;
@@ -71,18 +67,14 @@ body {
   border-radius: 0 0 4px 4px;
   transition: top 0.2s ease;
 }
-.skip-link:focus {
-  top: 0;
-}
+.skip-link:focus { top: 0; }
 
-/* Focus visible — WCAG 2.4.7 */
+/* Focus visible */
 :focus-visible {
   outline: 2px solid var(--pink);
   outline-offset: 3px;
 }
-:focus:not(:focus-visible) {
-  outline: none;
-}
+:focus:not(:focus-visible) { outline: none; }
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -94,31 +86,34 @@ img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 
-/* Grain overlay */
+/* Subtle static grain — NO mix-blend-mode (that was compositing the entire page) */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9998;
-  opacity: 0.2;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 180px 180px;
-  mix-blend-mode: overlay;
+  background-size: 200px 200px;
+  /* mix-blend-mode REMOVED — was forcing GPU compositing on entire page */
 }
 
-section { position: relative; overflow: hidden; }
+section {
+  position: relative;
+  overflow: hidden;
+  /* contain layout so browser can skip painting off-screen sections */
+  contain: layout;
+}
 
-/* Fixed navbar offset so anchor links land below the bar */
 section[id] {
   scroll-margin-top: 72px;
 }
 
-.split-word { display: inline-block; overflow: hidden; vertical-align: top; }
+.split-word   { display: inline-block; overflow: hidden; vertical-align: top; }
 .split-letter { display: inline-block; will-change: transform; }
 
-/* Section label */
 .section-label {
   display: flex;
   align-items: center;
@@ -139,14 +134,12 @@ section[id] {
   flex-shrink: 0;
 }
 
-.clip-diagonal-bottom {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 60px), 0 100%);
-}
-.clip-diagonal-top {
-  clip-path: polygon(0 60px, 100% 0, 100% 100%, 0 100%);
-}
-
-@media (max-width: 768px) {
-  .clip-diagonal-bottom,
-  .clip-diagonal-top { clip-path: none; }
+/* Reduce motion — respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .split-letter { will-change: auto; }
 }

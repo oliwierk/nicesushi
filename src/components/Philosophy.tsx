@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Philosophy() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -19,15 +18,6 @@ export default function Philosophy() {
         clipPath: 'inset(0 0% 0 0)',
         duration: 1.4, ease: 'power3.inOut',
         scrollTrigger: { trigger: imgWrapRef.current, start: 'top 78%' },
-      });
-
-      // Parallax on image
-      gsap.to(imgRef.current, {
-        y: '-10%', ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom', end: 'bottom top', scrub: 1.2,
-        },
       });
 
       // Text stagger

@@ -107,8 +107,8 @@ export default function Navigation() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           transition: 'background 0.45s ease, border-color 0.45s ease',
           background: scrolled ? 'rgba(13,31,23,0.95)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+          backdropFilter: scrolled ? 'blur(8px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(8px)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(232,121,155,0.1)' : '1px solid transparent',
         }}
       >
@@ -237,7 +237,7 @@ export default function Navigation() {
         style={{
           position: 'fixed', inset: 0, zIndex: 999,
           background: 'rgba(13,31,23,0.98)',
-          backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+          backdropFilter: 'none', WebkitBackdropFilter: 'none',
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', gap: 44,
           opacity: menuOpen ? 1 : 0,

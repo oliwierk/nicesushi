@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { value: 5,   suffix: '+', label: 'Smaków w Tubie',  sub: 'Nice, Flambe, Spicy i więcej' },
@@ -17,15 +16,16 @@ export default function Stats() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      stats.forEach((stat, i) => {
-        const el = numRefs.current[i];
-        if (!el) return;
-        const counter = { val: 0 };
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: 'top 75%',
-          once: true,
-          onEnter: () => {
+      /* One ScrollTrigger for all counters instead of 4 */
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          stats.forEach((stat, i) => {
+            const el = numRefs.current[i];
+            if (!el) return;
+            const counter = { val: 0 };
             gsap.to(counter, {
               val: stat.value, duration: 1.5, ease: 'power2.out', delay: i * 0.12,
               onUpdate: () => {
@@ -34,8 +34,8 @@ export default function Stats() {
                   : String(Math.round(counter.val));
               },
             });
-          },
-        });
+          });
+        },
       });
 
       gsap.fromTo(
