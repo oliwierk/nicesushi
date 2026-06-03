@@ -47,7 +47,9 @@ body {
   line-height: 1.6;
   color: var(--text);
   background-color: var(--bg);
-  overflow-x: hidden;
+  /* clip instead of hidden — does not create a scroll container,
+     so position:sticky inside the hero wrapper still works */
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

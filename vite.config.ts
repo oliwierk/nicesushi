@@ -10,10 +10,12 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'gsap-vendor': ['gsap'],
+          'three-vendor': ['three'],
         },
       },
     },
     cssMinify: true,
     reportCompressedSize: false,
+    chunkSizeWarningLimit: 600,
   },
 });

@@ -83,12 +83,7 @@ export default function Stats() {
             <dd style={{
               fontFamily: 'var(--font-display)', fontWeight: 900,
               fontSize: 'clamp(50px, 7vw, 96px)', lineHeight: 0.9, letterSpacing: '-0.02em',
-              background: i % 2 === 0
-                ? 'linear-gradient(135deg, var(--pink-vivid) 0%, var(--pink) 60%)'
-                : 'linear-gradient(135deg, var(--mint) 0%, var(--pink) 80%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              color: i % 2 === 0 ? 'var(--pink)' : 'var(--mint)',
               display: 'flex', alignItems: 'baseline', gap: 2,
             }}>
               <span ref={(el) => { numRefs.current[i] = el; }}>0</span>

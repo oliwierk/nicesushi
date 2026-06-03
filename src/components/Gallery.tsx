@@ -9,7 +9,6 @@ const photos = [
   { id: 'd', src: '/wiecejrolek.jpg',    label: 'Uramaki & Grill Łosoś'},
 ];
 
-/* Pure CSS hover — zero JS, zero re-renders, runs on compositor thread */
 const CELL_CSS = `
   .gal-cell { position: relative; overflow: hidden; background: #080F0B; cursor: pointer; }
   .gal-cell img {
@@ -60,7 +59,6 @@ export default function Gallery() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    /* Single ScrollTrigger for the whole section */
     const ctx = gsap.context(() => {
       gsap.fromTo(
         sectionRef.current?.querySelectorAll('.gal-header > *') ?? [],
@@ -68,20 +66,17 @@ export default function Gallery() {
         {
           opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 76%', once: true },
-        }
+        },
       );
-
-      /* Animate all cells together — one ScrollTrigger instead of 4 */
       gsap.fromTo(
         sectionRef.current?.querySelectorAll('.gal-cell') ?? [],
         { opacity: 0, y: 32 },
         {
           opacity: 1, y: 0, stagger: 0.08, duration: 0.75, ease: 'power3.out',
           scrollTrigger: { trigger: sectionRef.current?.querySelector('.gal-grid'), start: 'top 85%', once: true },
-        }
+        },
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -90,22 +85,32 @@ export default function Gallery() {
       ref={sectionRef}
       id="gallery"
       aria-label="Galeria Nice Sushi"
-      style={{ background: 'var(--bg-warm)', padding: 'clamp(60px, 10vw, 120px) 0' }}
+      style={{
+        background: 'var(--bg-warm)',
+        height: '100vh',
+        minHeight: 560,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 'clamp(36px, 6vh, 72px) 0 0',
+        boxSizing: 'border-box',
+      }}
     >
       <style>{CELL_CSS}</style>
 
+      {/* Header */}
       <div className="gal-header" style={{
         padding: '0 clamp(24px, 6vw, 80px)',
-        marginBottom: 'clamp(32px, 5vw, 56px)',
+        marginBottom: 'clamp(20px, 3vh, 40px)',
         display: 'flex', justifyContent: 'space-between',
         alignItems: 'flex-end', flexWrap: 'wrap', gap: 20,
+        flexShrink: 0,
       }}>
         <div>
-          <div className="section-label" style={{ marginBottom: 16 }}>Galeria</div>
+          <div className="section-label" style={{ marginBottom: 14 }}>Galeria</div>
           <h2 style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(30px, 4.5vw, 58px)',
+            fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 54px)',
             fontWeight: 900, letterSpacing: '0.05em', textTransform: 'uppercase',
-            lineHeight: 1, color: 'var(--text)',
+            lineHeight: 1.05, color: 'var(--text)',
           }}>
             Jedyne takie<br />
             <span style={{ color: 'transparent', WebkitTextStroke: '1.5px rgba(232,121,155,0.55)' }}>
@@ -114,19 +119,22 @@ export default function Gallery() {
           </h2>
         </div>
         <p style={{
-          fontFamily: 'var(--font-body)', fontSize: 'clamp(14px, 1.3vw, 16px)',
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(13px, 1.2vw, 16px)',
           color: 'var(--muted)', maxWidth: 300, lineHeight: 1.7,
         }}>
           Wirusowe sushi w tubie, autorskie rolki i smaki, które wracają w snach.
         </p>
       </div>
 
+      {/* Grid — fills remaining height */}
       <div className="gal-grid" style={{
         padding: '0 clamp(24px, 6vw, 80px)',
         display: 'grid',
         gridTemplateColumns: '5fr 3fr 3fr',
-        gridTemplateRows: '340px 250px',
+        gridTemplateRows: '1.5fr 1fr',
         gap: 4,
+        flex: 1,
+        minHeight: 0,
       }}>
         <GalleryCell photo={photos[0]} style={{ gridRow: '1 / 3', gridColumn: '1 / 2', height: '100%' }} />
         <GalleryCell photo={photos[1]} style={{ gridRow: '1 / 2', gridColumn: '2 / 3', height: '100%' }} />
@@ -134,9 +142,10 @@ export default function Gallery() {
         <GalleryCell photo={photos[3]} style={{ gridRow: '2 / 3', gridColumn: '2 / 4', height: '100%' }} />
       </div>
 
+      {/* Footer label */}
       <div style={{
-        padding: 'clamp(24px, 3vw, 36px) clamp(24px, 6vw, 80px) 0',
-        display: 'flex', alignItems: 'center', gap: 12,
+        padding: 'clamp(12px, 2vh, 24px) clamp(24px, 6vw, 80px)',
+        display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0,
       }}>
         <div aria-hidden="true" style={{ width: 36, height: '1px', background: 'var(--pink)' }} />
         <span style={{
@@ -151,15 +160,16 @@ export default function Gallery() {
         @media (max-width: 768px) {
           .gal-grid {
             grid-template-columns: 1fr 1fr !important;
-            grid-template-rows: 220px 180px 180px !important;
+            grid-template-rows: 1.3fr 1fr 1fr !important;
           }
           .gal-grid > *:first-child { grid-row: 1/2 !important; grid-column: 1/3 !important; }
           .gal-grid > *:nth-child(4) { grid-column: 1/3 !important; }
         }
         @media (max-width: 480px) {
+          section[id="gallery"] { height: auto !important; min-height: 100vh; }
           .gal-grid {
             grid-template-columns: 1fr !important;
-            grid-template-rows: repeat(4, 220px) !important;
+            grid-template-rows: repeat(4, 40vw) !important;
           }
           .gal-grid > * { grid-row: auto !important; grid-column: auto !important; }
         }
