@@ -384,7 +384,7 @@ export default function Hero() {
             fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400,
             letterSpacing: '0.28em', color: 'var(--dim)', textTransform: 'uppercase',
           }}>
-            © 2025 Nice Sushi
+            © 2026 Nice Sushi
           </div>
         </div>
       </section>

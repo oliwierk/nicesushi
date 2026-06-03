@@ -9,9 +9,9 @@ const ORDER_URL     = 'https://www.pyszne.pl/menu/nice-sushi-3';
 const FB_URL        = 'https://www.facebook.com/profile.php?id=61585356602337';
 
 const hours = [
-  { day: 'Pon – Czw', time: '12:00 – 21:00' },
-  { day: 'Pt – Sob',  time: '12:00 – 22:00' },
-  { day: 'Niedziela', time: '13:00 – 21:00' },
+  { day: 'Pon - Czw', time: '12:00 - 21:00' },
+  { day: 'Pt - Sob',  time: '12:00 - 22:00' },
+  { day: 'Niedziela', time: '13:00 - 21:00' },
 ];
 
 export default function Contact() {
@@ -156,7 +156,7 @@ export default function Contact() {
             <span style={{ fontFamily: 'var(--font-editorial)', fontStyle: 'italic', fontSize: '16px', fontWeight: 600, color: 'var(--pink)' }}>Nice</span>
             <span style={{ fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 700, letterSpacing: '0.35em', color: 'var(--muted)', textTransform: 'uppercase' }}>SUSHI</span>
           </span>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--dim)', letterSpacing: '0.06em' }}>© 2025 Nice Sushi Katowice</span>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--dim)', letterSpacing: '0.06em' }}>© 2026 Nice Sushi Katowice</span>
           <a href={FB_URL} target="_blank" rel="noopener noreferrer"
             style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: '13px', color: 'var(--dim)', transition: 'color .25s' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--pink)')}
