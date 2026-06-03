@@ -61,9 +61,10 @@ export default function SushiScene({ triggerRef }: Props) {
     if (!canvas) return;
 
     // mobile detection (evaluated once on mount)
-    const isMobile      = window.innerWidth < 680;
-    const pieceCount    = isMobile ? 4 : PIECE_COUNT;
-    const stackSpacing  = isMobile ? 0.95 : STACK_SPACING;
+    const isMobile     = window.innerWidth < 680;
+    const pieceCount   = isMobile ? 3 : PIECE_COUNT;
+    const stackSpacing = isMobile ? 1.1 : STACK_SPACING;
+    const cameraZ      = isMobile ? 6.5 : 12;
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -74,8 +75,8 @@ export default function SushiScene({ triggerRef }: Props) {
     renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1 : 2));
 
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(isMobile ? 46 : 36, 1, 0.1, 100);
-    camera.position.set(0, 0.5, 12);
+    const camera = new THREE.PerspectiveCamera(isMobile ? 50 : 36, 1, 0.1, 100);
+    camera.position.set(0, 0.3, cameraZ);
     camera.lookAt(0, 0, 0);
 
     scene.add(new THREE.AmbientLight(0xfff0e0, 0.9));

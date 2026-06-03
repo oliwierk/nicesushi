@@ -121,8 +121,8 @@ export default function Navigation() {
           <NiceLogo />
         </a>
 
-        {/* Centre city tag */}
-        <div aria-hidden="true" style={{
+        {/* Centre city tag — desktop only */}
+        <div aria-hidden="true" className="nav-city-tag" style={{
           position: 'absolute', left: '50%', transform: 'translateX(-50%)',
           fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500,
           letterSpacing: '0.22em', color: 'var(--muted)', textTransform: 'uppercase',
@@ -292,8 +292,9 @@ export default function Navigation() {
 
       <style>{`
         @media (max-width: 768px) {
-          .nav-desktop  { display: none !important; }
+          .nav-desktop   { display: none !important; }
           .nav-hamburger { display: flex !important; }
+          .nav-city-tag  { display: none !important; }
         }
       `}</style>
     </>
