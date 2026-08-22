@@ -113,6 +113,12 @@ section[id] {
   scroll-margin-top: 72px;
 }
 
+.page-wrap {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 40px);
+}
+
 .split-word   { display: inline-block; overflow: hidden; vertical-align: top; white-space: nowrap; }
 .split-letter { display: inline-block; will-change: transform; }
 

@@ -8,6 +8,7 @@ import Stats from './components/Stats';
 import Philosophy from './components/Philosophy';
 import Gallery from './components/Gallery';
 import Manifesto from './components/Manifesto';
+import Testimonials from './components/Testimonials';
 import Menu from './components/Menu';
 import Contact from './components/Contact';
 
@@ -46,12 +47,13 @@ export default function App() {
       {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
       <div ref={mainRef} style={{ opacity: 0 }}>
         <Navigation />
-        <main id="main-content">
+        <main id="main-content" className="page-wrap">
           <Hero />
           <Stats />
           <Philosophy />
           <Gallery />
           <Manifesto />
+          <Testimonials />
           <Menu />
           <Contact />
         </main>

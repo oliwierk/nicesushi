@@ -16,14 +16,14 @@ export interface MenuData {
   nigiri: MenuItem[];
 }
 
-// Local images available in /public
+// Sushi photos sourced from Unsplash (free to use)
 const IMG = {
-  pushup:  '/sushi_pushup.jpg',
-  rolki:   '/rolki.webp',
-  grill:   '/9.-grill-set.jpg',
-  promo:   '/PROMO-MIESZANY-SET-scaled.jpg',
-  mix:     '/zmieszone-zdjecie-zestaw-japonia-scaled.jpg',
-  misc:    '/95948.jpg',
+  pushup:  'https://images.unsplash.com/photo-1564489563601-c53cfc451e93?w=800&q=75&fit=crop&auto=format',
+  rolki:   'https://images.unsplash.com/photo-1713453018516-b08018818c0c?w=800&q=75&fit=crop&auto=format',
+  grill:   'https://images.unsplash.com/photo-1717988732486-285ea23a6f88?w=800&q=75&fit=crop&auto=format',
+  promo:   'https://images.unsplash.com/photo-1662675120057-5dcc9e20e45d?w=800&q=75&fit=crop&auto=format',
+  mix:     'https://images.unsplash.com/photo-1562436260-126d541901e0?w=800&q=75&fit=crop&auto=format',
+  misc:    'https://images.unsplash.com/photo-1772285268647-11deb0bdbe29?w=800&q=75&fit=crop&auto=format',
 };
 
 export const menuData: MenuData = {
