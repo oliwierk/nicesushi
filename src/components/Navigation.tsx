@@ -43,7 +43,7 @@ function NiceLogo() {
 
 export default function Navigation() {
   const navRef = useRef<HTMLElement>(null);
-  const [scrolled, setScrolled]         = useState(false);
+  const [scrolled, setScrolled]         = useState(() => typeof window !== 'undefined' && window.scrollY > 60);
   const [menuOpen, setMenuOpen]         = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -54,11 +54,11 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* ── entrance animation ── */
+  /* ── entrance animation — opacity only, no transform ── */
   useEffect(() => {
     gsap.fromTo(navRef.current,
-      { opacity: 0, y: -12 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.4 }
+      { opacity: 0 },
+      { opacity: 1, duration: 0.7, ease: 'power2.out', delay: 0.3 }
     );
   }, []);
 
